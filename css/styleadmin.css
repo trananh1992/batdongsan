@@ -1,0 +1,38 @@
+.topbar {
+    height: 3rem;
+}
+a.btn:hover {
+     -webkit-transform: scale(1.1);
+     -moz-transform: scale(1.1);
+     -o-transform: scale(1.1);
+ }
+a.btn {
+     -webkit-transform: scale(0.8);
+     -moz-transform: scale(0.8);
+     -o-transform: scale(0.8);
+     -webkit-transition-duration: 0.5s;
+     -moz-transition-duration: 0.5s;
+     -o-transition-duration: 0.5s;
+}
+footer.sticky-footer {
+    padding: 0.7rem;
+}
+.btnluu{
+    margin-right: 0.25em;
+}
+.card-header.py-3>h4{
+    float: left; 
+    padding-top: 5px;
+}
+.modal-body{
+    overflow-y: auto; 
+    max-height:65vh;
+}
+.alert.alert-danger>ul{
+    margin-bottom: 0rem;
+}
+@media (min-width: 576px){
+.modal-dialog {
+    max-width: 700px;
+}
+}
