@@ -22,6 +22,7 @@ Route::group(['prefix'=>'admin'],function(){
 		Route::post('xoahuyen','DiadiemController@postxoahuyen');
 		Route::post('themxa','DiadiemController@postthemxa');
 		Route::post('suaxa','DiadiemController@postsuaxa');
+		Route::post('xoaxa','DiadiemController@postxoaxa');
 		Route::get('ajaxgetdshuyen/{id}','DiadiemController@ajaxgetdshuyen');
 		Route::get('ajaxgetdsxa/{id}','DiadiemController@ajaxgetdsxa');
 	});
@@ -38,14 +39,13 @@ Route::group(['prefix'=>'admin'],function(){
 });
 
 
-
-
-
+//hiển thị tin tức
+Route::get('tintucchitiet','TintucController@hienthi');
 
 Route::get('newtest','TestController@newtest');
 Route::get('testinsert','TestController@insert');
 Route::get('testget','TestController@index');
-Route::get('test','TestController@test');
+Route::get('test','TestController@test0');
 Route::get('updatehuyen/{tinh}','TestController@updatehuyen');
 Route::get('themhuyen/{tinh}','TestController@themhuyen');
 Route::get('updatexa/{tinh}','TestController@updatexa');
