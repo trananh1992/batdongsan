@@ -181,17 +181,15 @@ class DiadiemController extends Controller
                 if($num >0){
                     for ($i=0; $i < $num ; $i++) { 
                         if(isset($huyen[$i]['ten']) && ($huyen[$i]['ten'] != $request->tenhuyen)){
-                            // unset($huyen[$i]);
-                            //Nếu là phần tử nằm giữa cần dời về 1 chỉ số
                             array_push($huyenmoi,$huyen[$i]);
-                            $search->update(array('huyen' => $huyenmoi));
                         } 
                     }
                 }                        
             }
         }
-        if($huyenmoi !=''){
-            return response()->json(['success'=>'Xóa huyện thành công'.$i]);
+        if(!empty($huyenmoi)){
+            $search->update(array('huyen' => $huyenmoi));
+            return response()->json(['success'=>'Xóa huyện thành công']);
         }
         return response()->json(['error'=> ["Lỗi! Không thể xóa"]]);
     }
@@ -249,7 +247,7 @@ class DiadiemController extends Controller
         }  return 0;       
     }
     public function postthemxa(Request $request)
-    {
+    {   
         $validator = Validator::make($request->all(),
             [
                 'tenxa'=>'required',
@@ -273,7 +271,6 @@ class DiadiemController extends Controller
         }
         return response()->json(['error'=>$validator->errors()->all()]);
     }
-
     public function postsuaxa(Request $request)
     {
         $validator = Validator::make($request->all(),
@@ -298,15 +295,17 @@ class DiadiemController extends Controller
                         $num = sizeof($huyen);
                         if($num > 0){
                             for ($i=0; $i < $num ; $i++) { 
-                                if(isset($huyen[$i]['xa']) ){
-                                    $xa = $huyen[$i]['xa'];                         
-                                    $num2 = sizeof($xa);
-                                    for ($j=0; $j < $num2 ; $j++) { 
-                                        if(isset($xa[$j]['ten']) && $xa[$j]['ten'] == $request->tenxaold){
-                                            $search->update(array('huyen.'.$i.'.xa.'.$j.'.ten' => $request->tenxaedit));
-                                            return response()->json(['success'=>'Chỉnh sửa xã thành công']);
+                                if(isset($huyen[$i]['ten']) && $huyen[$i]['ten'] == $request->tenhuyenxaedit){
+                                    if(isset($huyen[$i]['xa']) ){
+                                        $xa = $huyen[$i]['xa'];                         
+                                        $num2 = sizeof($xa);
+                                        for ($j=0; $j < $num2 ; $j++) { 
+                                            if(isset($xa[$j]['ten']) && $xa[$j]['ten'] == $request->tenxaold){
+                                                $search->update(array('huyen.'.$i.'.xa.'.$j.'.ten' => $request->tenxaedit));
+                                                return response()->json(['success'=>'Chỉnh sửa xã thành công']);
+                                            }
                                         }
-                                    }
+                                    }   
                                 }
 
                             }
@@ -315,6 +314,46 @@ class DiadiemController extends Controller
                 }
             }
         }
+    }
+    public function postxoaxa(Request $request)
+    {                //return $request->all();
+        $search = Diadiem::where('_id',$request->idtinh);
+        $diadiem = $search->get();
+        $xamoi = array();
+        foreach ($diadiem as $dd) {
+            if(isset($dd->huyen) ){
+                $huyen = $dd->huyen;
+                $num = sizeof($huyen);
+                if($num > 0){
+                    for ($i=0; $i < $num ; $i++) { 
+                        if(isset($huyen[$i]['ten']) && $huyen[$i]['ten'] == $request->tenhuyen){
+                            if(isset($huyen[$i]['xa']) ){
+                                $xa = $huyen[$i]['xa'];                         
+                                $num2 = sizeof($xa);
+                                if($num2 == 1){
+                                    unset($huyen[$i]['xa']);
+                                    $search->update(array('huyen' => $huyen));
+                                    return response()->json(['success'=>'Xóa xã thành công']);
+                                }else{
+                                    for ($j=0; $j < $num2 ; $j++) { 
+                                        if(isset($xa[$j]['ten']) && $xa[$j]['ten'] != $request->tenxa){
+                                            array_push($xamoi,$xa[$j]);
+                                        }
+                                    }
+                                    if(count($xamoi) > 0){
+                                        $search->update(array('huyen.'.$i.'.xa' => $xamoi));
+                                        return response()->json(['success'=>'Xóa xã thành công']);
+                                    }
+                                }
+                                
+                            }   
+                        }
+                        
+                    }
+                }                    
+            }                    
+        }
+        return response()->json(['error'=> ["Lỗi! Không thể xóa"]]);
     }
     public function ajaxgetdshuyen($id)
     {
