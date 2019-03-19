@@ -5,27 +5,40 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
-use App\TinhTP;
-use App\QuanHuyen;
-use App\PhuongXa;
+use App\Tinh;
+use App\Huyen;
+use App\Xa;
 use App\Diadiem;
 
 class DiadiemController extends Controller
 {
     public function getdiadiem()
     {
-        $tinh=Diadiem::select('tinh')->get();
+        // $huyen = new Huyen();
+        // $huyen->ten = "Ninh Kiều"; 
+        // $t = new Tinh();
+        // $t->ten = "Cần Thơ";
+        // $t->save();
+        // $t->dshuyen()->save($huyen);
+        $tinh=Tinh::all();
+
         return view('admin.pages.diadiem.tinh',compact('tinh'));
     }
-    public function getthemtinh()
+    public function gethuyen($id)
     {
-        return view('admin.pages.diadiem.themtinh');
+        $tinh=Tinh::find($id);
+        return view('admin.pages.diadiem.huyen',compact('tinh'));
+    }
+    public function getxa($idtinh,$idhuyen)
+    {
+        $huyen=Tinh::find($idtinh)->dshuyen()->where('_id',$idhuyen)->first();
+        return view('admin.pages.diadiem.xa',compact(['huyen','idtinh','idhuyen']));
     }
     public function checktentinh($tentinh)
     {
-        $diadiem = Diadiem::all();
-        foreach ($diadiem as $dd) {
-            if(isset($dd->tinh) && $dd->tinh == $tentinh){
+        $tinh = Tinh::all();
+        foreach ($tinh as $t) {
+            if($t->ten == $tentinh){
                 return 1;
             }
         } return 0;
@@ -47,9 +60,9 @@ class DiadiemController extends Controller
             {
                 return response()->json(['error'=> ["Tên tỉnh đã tồn tại"]]);
             }else{
-                $diadiem = new Diadiem();
-                $diadiem->tinh = $request->tentinh;
-                $diadiem->save();
+                $tinh = new Tinh();
+                $tinh->ten = $request->tentinh;
+                $tinh->save();
                 return response()->json(['success'=>'Thêm  tỉnh thành công']);
             }            
         }
@@ -59,19 +72,19 @@ class DiadiemController extends Controller
     {
         $validator = Validator::make($request->all(),
             [
-                'tentinhedit'=>'required',
+                'tentinh'=>'required',
             ],
             [
-                'tentinhedit.required' => 'Vui lòng nhập tên tỉnh',
+                'tentinh.required' => 'Vui lòng nhập tên tỉnh',
             ]);
 
         if ($validator->passes()) {
-            $checkten = $this->checktentinh($request->tentinhedit);
+            $checkten = $this->checktentinh($request->tentinh);
             if($checkten == 1)
             {
                 return response()->json(['error'=> ["Tên tỉnh đã tồn tại"]]);
             }else{
-                $diadiem = Diadiem::where('_id',$id)->update(array('tinh' => $request->tentinhedit));
+                $tinh = Tinh::where('_id',$id)->update(array('ten' => $request->tentinh));
                 return response()->json(['success'=>'Chỉnh sửa tên tỉnh thành công']); 
             }           
         }
@@ -79,36 +92,15 @@ class DiadiemController extends Controller
     }
     public function checktenhuyen($idtinh,$tenhuyen)
     {
-        $diadiem = Diadiem::where('_id',$idtinh)->get();
-        foreach ($diadiem as $dd) {
-            if(isset($dd->huyen)){
-                $huyen = $dd->huyen;
-                $num = sizeof($huyen);
-                if($num >0){
-                    for ($i=0; $i < $num ; $i++) { 
-                        if(isset($huyen[$i]['ten']) && $huyen[$i]['ten'] == $tenhuyen){
-                            return 1;
-                        } 
-                    }
-                }else continue;
-            }else continue;
+        $tinh = Tinh::find($idtinh)->first();
+        if(isset($tinh->dshuyen)){
+            foreach ($tinh->dshuyen as $key => $value) {
+                if($value->ten == $tenhuyen){
+                    return 1;
+                } 
+            }
+            
         }return 0;
-    }
-    public function themhuyen($idtinh,$tenhuyen)
-    {
-        $search = Diadiem::where('_id',$idtinh);
-        $diadiem = $search->get();
-        foreach ($diadiem as $dd) {
-            if(isset($dd->huyen)){
-                $huyen = $dd->huyen;
-                $num = sizeof($huyen);
-                $search->update(array('huyen.'.$num.'.ten' => $tenhuyen));
-                return 1;           
-            }else{
-                $search->update(array('huyen.0.ten' => $tenhuyen));
-                return 1;
-            }             
-        }        
     }
     public function postthemhuyen(Request $request)
     {
@@ -121,52 +113,42 @@ class DiadiemController extends Controller
             ]);
 
         if ($validator->passes()) {
-            $checkten = $this->checktenhuyen($request->idtinhhuyen,$request->tenhuyen);
+            $checkten = $this->checktenhuyen($request->idtinh,$request->tenhuyen);
             if( $checkten == 1){
                 return response()->json(['error'=> ["Tên huyện đã tồn tại"]]);                
             }else {
-                $themhuyen = $this->themhuyen($request->idtinhhuyen,$request->tenhuyen);
-                if( $themhuyen == 1){
-                    return response()->json(['success'=>'Thêm huyện thành công']);  
-                }else{
-                    return response()->json(['error'=> ["Lỗi! Không thể lưu"]]);
-                }
+                $huyen = new Huyen();
+                $huyen->ten = $request->tenhuyen;
+                $tinh = Tinh::find($request->idtinh);
+                $tinh->dshuyen()->save($huyen);
+                return response()->json(['success'=>'Thêm huyện thành công']);                  
             }
         }
         return response()->json(['error'=>$validator->errors()->all()]);
     }
     public function postsuahuyen(Request $request)
-    { 
+    { //return $request->all();
         $validator = Validator::make($request->all(),
             [
-                'tenhuyenedit'=>'required',
+                'tenhuyen'=>'required',
             ],
             [
-                'tenhuyenedit.required' => 'Vui lòng nhập tên huyện',
+                'tenhuyen.required' => 'Vui lòng nhập tên huyện',
             ]);
 
         if ($validator->passes()) {
-            $checkten = $this->checktenhuyen($request->idtinhhuyenedit,$request->tenhuyenedit);
+            $checkten = $this->checktenhuyen($request->idtinh,$request->tenhuyen);
             if($checkten == 1){
                 return response()->json(['error'=> ["Tên huyện đã tồn tại"]]);
-            }else{                
-                $search = Diadiem::where('_id',$request->idtinhhuyenedit);
-                $diadiem = $search->get();
-                foreach ($diadiem as $dd) {
-                    if(isset($dd->huyen)){                
-                        $huyen = $dd->huyen;
-                        $num = sizeof($huyen);
-                        if($num >0){
-                            for ($i=0; $i < $num ; $i++) { 
-                                if(isset($huyen[$i]['ten']) && ($huyen[$i]['ten'] == $request->tenhuyenold)){
-                                    $search->update(array('huyen.'.$i.'.ten' => $request->tenhuyenedit));
-                                    return response()->json(['success'=>'Thêm huyện thành công']);
-                                } 
-                            }
-                        }                        
-                    }
-                }
             }
+            else{                
+                $tinh=Tinh::find($request->idtinh)->dshuyen()->where('_id',$request->idhuyen)->first();
+                $tinh->ten = $request->tenhuyen;
+                $tinh->save();
+
+
+                return response()->json(['success'=>'Chỉnh sửa tên huyện thành công']);
+            }//$search->update(array('huyen.'.$i.'.ten' => $request->tenhuyenedit));
         }
     }
     public function postxoahuyen(Request $request)
@@ -193,58 +175,17 @@ class DiadiemController extends Controller
         }
         return response()->json(['error'=> ["Lỗi! Không thể xóa"]]);
     }
-    public function checktenxa($idtinh,$tenhuyen,$tenxa)
+    public function checktenxa($idtinh,$idhuyen,$tenxa)
     {
-        // $idtinh ="5c88741636d84a2a9c00240d";
-        // $tenhuyen ="Ô Môn";
-        // $tenxa="An Bình";
-        $diadiem = Diadiem::where('_id',$idtinh)->get();
-        foreach ($diadiem as $dd) {
-            if(isset($dd->huyen)){
-                $huyen = $dd->huyen;
-                $num = sizeof($huyen);
-                if($num > 0){
-                    for ($i=0; $i < $num ; $i++) { 
-                        if(isset($huyen[$i]['ten']) && ($huyen[$i]['ten'] == $tenhuyen) && isset($huyen[$i]['xa'])){
-                            $xa = $huyen[$i]['xa'];                         
-                            $num2 = sizeof($xa);
-                            for ($j=0; $j < $num2 ; $j++) { 
-                                if(isset($xa[$j]['ten']) && $xa[$j]['ten'] == $tenxa){
-                                    return 1;
-                                }
-                            }
-                        }else continue;
-                    }
-                }else continue;                
+        $tinh = Tinh::find($idtinh)->dshuyen()->where('_id',$idhuyen)->first();
+        if(isset($tinh->dsxa)){
+            foreach ($tinh->dsxa as $key => $value) {
+                if($value->ten == $tenxa){
+                    return 1;
+                } 
             }
-        } return 0;
-    }
-    public function themxa($idtinh,$tenhuyen,$tenxa)
-    {
-        $search = Diadiem::where('_id',$idtinh);
-        $diadiem = $search->get();
-        foreach ($diadiem as $dd) {
-            if(isset($dd->huyen)){
-                $huyen = $dd->huyen;
-                $num = sizeof($huyen);
-                if($num > 0){
-                    for ($i=0; $i < $num ; $i++) { 
-                        if(isset($huyen[$i]['ten']) && $huyen[$i]['ten'] == $tenhuyen){
-                            if(isset($huyen[$i]['xa'])){
-                                $xa = $huyen[$i]['xa'];                         
-                                $num2 = sizeof($xa);
-                                $search->update(array('huyen.'.$i.'.xa.'.$num2.'.ten' => $tenxa));
-                                return 1;
-                            }else{
-                                $search->update(array('huyen.'.$i.'.xa.0.ten' => $tenxa));
-                                return 1;
-                            } 
-                        }else continue;
-                    }
-
-                } else continue;
-            }           
-        }  return 0;       
+            
+        }return 0;
     }
     public function postthemxa(Request $request)
     {   
@@ -257,16 +198,15 @@ class DiadiemController extends Controller
             ]);
 
         if ($validator->passes()) {
-            $checkten = $this->checktenxa($request->idtinhhuyenxa,$request->tenhuyenxa,$request->tenxa);
+            $checkten = $this->checktenxa($request->idtinh,$request->idhuyen,$request->tenxa);
             if( $checkten == 1){
                 return response()->json(['error'=> ["Tên xã đã tồn tại"]]); 
             }else {
-                $themxa = $this->themxa($request->idtinhhuyenxa,$request->tenhuyenxa,$request->tenxa);
-                if( $themxa == 1){
-                    return response()->json(['success'=>'Thêm xã thành công']);  
-                }else{
-                    return response()->json(['error'=> ["Lỗi! Không thể lưu"]]);
-                }
+                $xa = new Xa();
+                $xa->ten = $request->tenxa;
+                $tinh = Tinh::find($request->idtinh)->dshuyen()->where('_id',$request->idhuyen)->first();
+                $tinh->dsxa()->save($xa);
+                return response()->json(['success'=>'Thêm xã thành công']);   
             }
         }
         return response()->json(['error'=>$validator->errors()->all()]);
@@ -275,43 +215,23 @@ class DiadiemController extends Controller
     {
         $validator = Validator::make($request->all(),
             [
-                'tenxaedit'=>'required',
+                'tenxa'=>'required',
             ],
             [
-                'tenxaedit.required' => 'Vui lòng nhập tên xã',
+                'tenxa.required' => 'Vui lòng nhập tên xã',
             ]);
 
         if ($validator->passes()) {
-            $checkten = $this->checktenxa($request->idtinhhuyenxaedit,$request->tenhuyenxaedit,$request->tenxaedit);
+            $checkten = $this->checktenxa($request->idtinh,$request->idhuyen,$request->tenxa);
             if($checkten == 1){
                 return response()->json(['error'=> ["Tên xã đã tồn tại"]]);
             }
             else{                
-                $search = Diadiem::where('_id',$request->idtinhhuyenxaedit);
-                $diadiem = $search->get();
-                foreach ($diadiem as $dd) {
-                    if(isset($dd->huyen) ){
-                        $huyen = $dd->huyen;
-                        $num = sizeof($huyen);
-                        if($num > 0){
-                            for ($i=0; $i < $num ; $i++) { 
-                                if(isset($huyen[$i]['ten']) && $huyen[$i]['ten'] == $request->tenhuyenxaedit){
-                                    if(isset($huyen[$i]['xa']) ){
-                                        $xa = $huyen[$i]['xa'];                         
-                                        $num2 = sizeof($xa);
-                                        for ($j=0; $j < $num2 ; $j++) { 
-                                            if(isset($xa[$j]['ten']) && $xa[$j]['ten'] == $request->tenxaold){
-                                                $search->update(array('huyen.'.$i.'.xa.'.$j.'.ten' => $request->tenxaedit));
-                                                return response()->json(['success'=>'Chỉnh sửa xã thành công']);
-                                            }
-                                        }
-                                    }   
-                                }
-
-                            }
-                        }                    
-                    }                    
-                }
+                $xa = Tinh::find($request->idtinh)->dshuyen()->where('_id',$request->idhuyen)->first()
+                                ->dsxa()->where('_id',$request->idxa)->first();
+                $xa->ten = $request->tenxa;
+                $xa->save();
+                return response()->json(['success'=>'Chỉnh sửa xã thành công']);
             }
         }
     }
