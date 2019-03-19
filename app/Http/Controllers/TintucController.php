@@ -7,6 +7,11 @@ use App\Tintuc;
 
 class TintucController extends Controller
 {
+    public function hienthi()
+    {
+        $tintuc=Tintuc::first();
+        return view('front.pages.tintuc.chitiet',compact('tintuc'));
+    }
     public function index()
     {
         $tintuc=Tintuc::all();
@@ -19,8 +24,8 @@ class TintucController extends Controller
     public function postadd(Request $request)
     {
         $t = new Tintuc();
-        $t->tieu_de = $request->get('tieude');
-        $t->noi_dung = $request->get('noidung');
+        $t->tieude = $request->get('tieude');
+        $t->noidung = $request->get('noidung');
         $t->gia = $request->get('gia');      
         $t->save();
         return redirect('tintucadd')->with('success', 'Thêm tin tức thành công');

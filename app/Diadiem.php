@@ -11,11 +11,11 @@ class DiaDiem extends Eloquent
     protected $collection = 'diadiem';
     
     protected $fillable = [
-        'ten',
+        'ten', 'huyen',
     ];
     public function dshuyen()
     {
-    	$this->embedsMany('QuanHuyen');
+    	return $this->embedsMany('App\QuanHuyen');
     }
 
 }

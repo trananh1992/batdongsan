@@ -11,11 +11,33 @@ use App\Tintuc;
 
 class TestController extends Controller
 {
-    public function test()
+    public function test0()
     {
-        $diadiem = Diadiem::first()->dshuyen();
+        $qh = new QuanHuyen();
+        // $qh->ten = "QH 2";
+
+        // $dd = Diadiem::first();
+        // $kq = $dd->dshuyen()->save($qh);
+        // return $dd;
+
+
+        //xoa
+
+        $dd = Diadiem::find('5c88741636d84a2a9c00240d');
+        foreach ($dd->dshuyen as $key => $value) {
+            if($value->ten == "QH 1"){
+                $value->delete();
+            }
+        }
+        $a = $dd->dshuyen->find('5c90485336d84a27340078b5');
+        dd($a);
+        // $h = $dd::where('_id','5c9047fe36d84a27340078b4');
+        $h->delete();
+        // var_dump( $h->ten) ;
+            
+        
     }
-    public function delete()()
+    public function delete()
     {
         $document = array( 
           "title" => "MongoDB", 
