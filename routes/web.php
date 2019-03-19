@@ -13,10 +13,11 @@
 Route::group(['prefix'=>'admin'],function(){
 	Route::group(['prefix'=>'diadiem'],function(){
 		Route::get('/','DiadiemController@getdiadiem');
-		Route::get('themtinh','DiadiemController@getthemtinh');
-		Route::get('ch','DiadiemController@checktenxa');
+		Route::get('huyen/{id}','DiadiemController@gethuyen');
+		Route::get('xa/{idtinh}/{idhuyen}','DiadiemController@getxa');
 		Route::post('themtinh','DiadiemController@postthemtinh');
 		Route::post('suatinh/{id}','DiadiemController@postsuatinh');
+		Route::post('xoatinh','DiadiemController@postxoatinh');
 		Route::post('themhuyen','DiadiemController@postthemhuyen');
 		Route::post('suahuyen','DiadiemController@postsuahuyen');
 		Route::post('xoahuyen','DiadiemController@postxoahuyen');
