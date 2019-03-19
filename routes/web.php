@@ -16,14 +16,14 @@ Route::group(['prefix'=>'admin'],function(){
 		Route::get('huyen/{id}','DiadiemController@gethuyen');
 		Route::get('xa/{idtinh}/{idhuyen}','DiadiemController@getxa');
 		Route::post('themtinh','DiadiemController@postthemtinh');
-		Route::post('suatinh/{id}','DiadiemController@postsuatinh');
-		Route::post('xoatinh','DiadiemController@postxoatinh');
+		Route::post('suatinh','DiadiemController@postsuatinh');
+		Route::get('xoatinh/{id}','DiadiemController@getxoatinh');
 		Route::post('themhuyen','DiadiemController@postthemhuyen');
 		Route::post('suahuyen','DiadiemController@postsuahuyen');
-		Route::post('xoahuyen','DiadiemController@postxoahuyen');
+		Route::get('xoahuyen/{idtinh}/{idhuyen}','DiadiemController@getxoahuyen');
 		Route::post('themxa','DiadiemController@postthemxa');
 		Route::post('suaxa','DiadiemController@postsuaxa');
-		Route::post('xoaxa','DiadiemController@postxoaxa');
+		Route::get('xoaxa/{idtinh}/{idhuyen}/{idxa}','DiadiemController@getxoaxa');
 		Route::get('ajaxgetdshuyen/{id}','DiadiemController@ajaxgetdshuyen');
 		Route::get('ajaxgetdsxa/{id}','DiadiemController@ajaxgetdsxa');
 	});
