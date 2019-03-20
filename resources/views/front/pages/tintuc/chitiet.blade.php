@@ -123,7 +123,7 @@
                         </div>
 
                         <!-- Catagories Widget -->
-                        <div class="south-catagories-card mb-70">
+                        <div class="south-catagories-card mb-70" style="display: none;">
                             <h5>Archive</h5>
                             <ul class="catagories-menu">
                                 <li><a href="#">Radiology</a></li>
@@ -135,14 +135,14 @@
                         </div>
 
                         <!-- Catagories Widget -->
-                        <div class="south-catagories-card mb-70">
-                            <h5>Categories</h5>
+                        <div class="south-catagories-card mb-70" >
+                            <h5>Danh mục</h5>
                             <ul class="catagories-menu">
-                                <li><a href="#">Radiology</a></li>
-                                <li><a href="#">Cardiology</a></li>
-                                <li><a href="#">Gastroenterology</a></li>
-                                <li><a href="#">Neurology</a></li>
-                                <li><a href="#">General surgery</a></li>
+                                <li><a href="#">Tin Nhà ở</a></li>
+                                <li><a href="#">Tin Chung cư</a></li>
+                                <li><a href="#">Tin Đất đai</a></li>
+                                <li><a href="#">Tin Mặt bằng văn phòng</a></li>
+                                <li><a href="#">Tin Phòng trọ</a></li>
                             </ul>
                         </div>
 

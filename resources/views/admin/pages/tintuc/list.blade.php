@@ -19,28 +19,16 @@
                       <th>STT</th>
                       <th>Tiêu đề</th>
                       <th>Nội dung</th>
-                      <th>Ngày tạo</th>
                       <th>Giá</th>
                       <th>Chỉnh sửa</th>
                     </tr>
                   </thead>
-                  <tfoot>
-                    <tr>
-                      <th>STT</th>
-                      <th>Tiêu đề</th>
-                      <th>Nội dung</th>
-                      <th>Ngày tạo</th>
-                      <th>Giá</th>
-                      <th>Chỉnh sửa</th>
-                    </tr>
-                  </tfoot>
                   <?php $i=1; ?>
                   	@foreach($tintuc as $t)
                     <tr>
                       <td>{{$i++}}</td>
-                      <td>{!! $t->tieu_de !!}</td>
-                      <td>{!! $t->noi_dung !!}</td>
-                      <td>{{$t->created_at}}</td>
+                      <td>{!! substr($t->tieude,0,100) !!}</td>
+                      <td>{!! substr($t->noidung,0,100) !!}......</td>
                       <td>{{$t->gia}}</td>
                       <td><a href="tintucedit/{{$t->id}}" class="btn btn-primary a-btn-slide-text">
                           <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>

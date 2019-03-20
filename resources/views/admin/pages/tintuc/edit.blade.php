@@ -11,11 +11,11 @@
 <input type="hidden" name="_token" value="{{ csrf_token() }}">
   <div class="form-group">
     <label>Tiêu đề</label>
-    <input type="text" class="form-control" name="tieude" value="{{$tintuc->tieu_de}}">
+    <input type="text" class="form-control" name="tieude" value="{{$tintuc->tieude}}">
   </div>
   <div class="form-group">
     <label>Nội dung</label>
-    <textarea class="form-control" rows="5" id="noidung" name="noidung" >{{$tintuc->noi_dung}}</textarea>
+    <textarea class="form-control" rows="5" id="noidung" name="noidung" >{{$tintuc->noidung}}</textarea>
   </div>
   <div class="form-group">
     <label>Giá</label>

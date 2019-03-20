@@ -124,6 +124,7 @@
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
           });
+        var base_url = window.location.origin + '/' + window.location.pathname.split ('/') [1] + '/';
     </script>
   @yield('script')
 </body>
