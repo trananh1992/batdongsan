@@ -24,11 +24,20 @@ Route::group(['prefix'=>'admin'],function(){
 		Route::post('themxa','DiadiemController@postthemxa');
 		Route::post('suaxa','DiadiemController@postsuaxa');
 		Route::get('xoaxa/{idtinh}/{idhuyen}/{idxa}','DiadiemController@getxoaxa');
-		Route::get('ajaxgetdshuyen/{id}','DiadiemController@ajaxgetdshuyen');
-		Route::get('ajaxgetdsxa/{id}','DiadiemController@ajaxgetdsxa');
+		Route::get('getdshuyen/{idtinh}','DiadiemController@getdshuyen');
+		Route::get('getdsxa/{idtinh}/{idhuyen}','DiadiemController@getdsxa');
+	});
+	Route::group(['prefix'=>'tintuc'],function(){
+		Route::get('/','TintucController@danhsach');
+		Route::get('them','TintucController@getthemtintuc');
+		Route::post('them','TintucController@postthemtintuc');
+		Route::get('sua/{id}','TintucController@getsuatintuc');
+		Route::post('sua','TintucController@postsuatintuc');
+		Route::get('xoa/{id}','TintucController@getxoatintuc');
 	});
 	Route::group(['prefix'=>'danhmuc'],function(){
 		Route::get('huong','DanhMucController@huong');
+		Route::get('getdshuong','DanhMucController@getdshuong');
 		Route::post('addhuong','DanhMucController@addHuong');
 		Route::get('loaibds','DanhMucController@loaibds');
 		Route::get('loaidat','DanhMucController@loaidat');
@@ -37,9 +46,15 @@ Route::group(['prefix'=>'admin'],function(){
 		Route::get('loaigiayto','DanhMucController@loaigiayto');
 		Route::get('loaivp','DanhMucController@loaivp');
 	});
+
 });
+Route::get('saveimage', function () {
+    return view('admin.test');
+});
+Route::post('saveimage','TintucController@saveimage');
 
-
+Route::get('createuser','UserController@create');
+Route::post('dangnhap','UserController@postdangnhap');
 //hiển thị tin tức
 Route::get('tintucchitiet','TintucController@hienthi');
 
@@ -67,11 +82,7 @@ Route::get('admin', function () {
 Route::get('login', function () {
     return view('admin.pages.login');
 });
-Route::get('tintuc','TintucController@index');
-Route::get('tintucadd','TintucController@getadd');
-Route::post('tintucadd','TintucController@postadd');
-Route::get('tintucedit/{id}','TintucController@getedit');
-Route::post('tintucedit/{id}','TintucController@postedit');
+
 
 Route::get('show','NhadatController@show');
 Route::get('add','NhadatController@create');

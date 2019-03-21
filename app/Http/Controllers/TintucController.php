@@ -4,36 +4,88 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Tintuc;
+use App\Tinh;
+use App\DanhMuc;
 
 class TintucController extends Controller
 {
     public function hienthi()
     {
-        $tintuc=Tintuc::first();
+        $tintuc=Tintuc::find('5c93248136d84a28980013ab');
         return view('front.pages.tintuc.chitiet',compact('tintuc'));
     }
-    public function index()
+    public function danhsach()
     {
         $tintuc=Tintuc::all();
-        return view('admin.pages.tintuc.list',compact('tintuc'));
+        return view('admin.pages.tintuc.danhsach',compact('tintuc'));
     }
-    public function getadd()
+    public function getthemtintuc()
     {
-        return view('admin.pages.tintuc.add');
+        $tinh = Tinh::all();
+        $danhmuc = DanhMuc::all();
+        return view('admin.pages.tintuc.them',compact(['tinh','danhmuc']));
     }
-    public function postadd(Request $request)
+    public function postthemtintuc(Request $request)
     {
-        $t = new Tintuc();
-        $t->tieude = $request->get('tieude');
-        $t->noidung = $request->get('noidung');
-        $t->gia = $request->get('gia');      
-        $t->save();
-        return redirect('tintucadd')->with('success', 'Thêm tin tức thành công');
+        $tin = new Tintuc();
+        $tin->dmtin = $request->dmtin; 
+        $tin->loaitin = $request->loaitin; 
+        //Get tỉnh huyện xã
+        $tinh = Tinh::find($request->tinh);
+        $huyen = $tinh->dshuyen->where('_id',$request->huyen)->first();
+        $xa = $huyen->dsxa->where('_id',$request->xa)->first();
+        $tin->tinh = $tinh->ten; 
+        $tin->huyen = $huyen->ten; 
+        $tin->xa = $xa->ten;
+        $tin->tenduong = $request->tenduong;
+        if($request->loaihinhcanho != '0'){
+            $tin->loaihinhcanho = $request->loaihinhcanho;
+        }
+        if($request->loaihinhnhao != '0'){          
+            $tin->loaihinhnhao = $request->loaihinhnhao;
+        }
+        if($request->loaihinhnhao != '0'){ 
+            $tin->loaihinhvanphong = $request->loaihinhvanphong; 
+        }
+        if($request->nohau != ''){ 
+            $tin->nohau = $request->nohau; 
+        }
+        $tin->banla = $request->banla; 
+        $tin->gia = $request->gia; 
+
+        if($request->pngu != ''){ 
+            $tin->pngu = $request->pngu; 
+        }
+        if($request->pvsinh != ''){ 
+            $tin->pvsinh = $request->pvsinh; 
+        }
+        $tin->dientich = $request->dientich;
+        $tin->huong = $request->huong;
+        $tin->ddnhadat = $request->ddnhadat;
+        $tin->gtpl = $request->gtpl;
+        $tin->tieude = $request->tieude;
+        $tin->noidung = $request->noidung;   
+        $images=array(); 
+        if($files=$request->file('hinhanh')){
+            foreach($files as $file){
+                $imgdata = base64_encode(file_get_contents($file)); 
+                $images[]=$imgdata;  
+            }
+            $tin->hinhanh = $images;
+        }
+        $tin->save();
+        return redirect('admin/tintuc/them')->with('success', 'Thêm tin tức thành công');
     }
-    public function getedit($id)
+    public function getsuatintuc($id)
     {
         $tintuc = Tintuc::find($id);
-        return view('admin.pages.tintuc.edit',compact('tintuc','id'));
+        return view('admin.pages.tintuc.sua',compact('tintuc','id'));
+    }
+    public function saveimage(Request $request){
+        $imgdata = base64_encode(file_get_contents($request->hinhanh)); 
+        return $imgdata;
+        echo '<img src="data:image/x-icon;base64,'. $imgdata .'" />';
+
     }
     public function postedit(Request $request, $id)
     {
@@ -52,8 +104,8 @@ class TintucController extends Controller
             }
         }
         $t = Tintuc::find($id);
-        $t->tieu_de = $request->get('tieude');
-        $t->noi_dung = $request->get('noidung');
+        $t->tieude = $request->get('tieude');
+        $t->noidung = $request->get('noidung');
         $t->gia = $request->get('gia');
         if($images) {
             $t->hinh_anh=json_encode($images);             

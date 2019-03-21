@@ -2,13 +2,13 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
 class HuongNhaDat extends Eloquent
 {
     protected $connection = 'mongodb';
-    protected $collection = 'huongnhadat';
+    protected $collection = 'danhmuc';
     
     protected $fillable = [
         'ten_huong',

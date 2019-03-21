@@ -9,7 +9,21 @@
                     <div class="single-blog-area">
                         <!-- Post Thumbnail -->
                         <div class="blog-post-thumbnail">
-                            <img src="img/blog-img/blog3.jpg" alt="">
+                            
+                        <div class="hero-slides owl-carousel">
+                            <!-- Single Hero Slide -->
+                            <div class="single-hero-slide bg-img" style="background-image: url(img/bg-img/hero3.jpg);">
+                                <div class="container h-100">
+                                    <div class="row h-100 align-items-center">
+                                        <div class="col-12">
+                                            <div class="hero-slides-content">
+                                                <h2 data-animation="fadeInUp" data-delay="100ms">Find your perfect house</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         </div>
                         <!-- Post Content -->
                         <div class="post-content">
@@ -24,7 +38,10 @@
                                 <p>By <a href="#">Admin</a> | in <a href="#">Uncategorized</a> | <a href="#">2 Comments</a></p>
                             </div>
                             <p><?php echo $tintuc->noidung; ?>.</p>
-                            <p>Giá: <?php echo $tintuc->gia; ?>.</p>
+                            <p>Hình ảnh: </p>
+                            <?php $__currentLoopData = $tintuc->hinhanh; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $hinh): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <img src="data:image/x-icon;base64, <?php echo e($hinh); ?> " />
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
                     </div>
 

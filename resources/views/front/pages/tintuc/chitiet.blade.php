@@ -25,7 +25,10 @@
                                 <p>By <a href="#">Admin</a> | in <a href="#">Uncategorized</a> | <a href="#">2 Comments</a></p>
                             </div>
                             <p>{!!$tintuc->noidung!!}.</p>
-                            <p>Giá: {!!$tintuc->gia!!}.</p>
+                            <p>Hình ảnh: </p>
+                            @foreach($tintuc->hinhanh as $hinh)
+                                <img src="data:image/x-icon;base64, {{$hinh}} " />
+                            @endforeach
                         </div>
                     </div>
 

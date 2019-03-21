@@ -8,7 +8,15 @@ use App\DanhMuc;
 class DanhMucController extends Controller
 {
 
-    //Danh muc Huong
+    public function getdshuong()
+    {
+        $huong = array();
+        $danhmuc = DanhMuc::where('ten','DanhMucHuong')->first();
+        foreach ($danhmuc->dshuong as $key => $value) {
+                array_push($huong, $value);
+        }
+        return $huong;
+    }
     public function huong()
     {
         $huong=DanhMuc::all();

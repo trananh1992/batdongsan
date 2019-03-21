@@ -10,9 +10,9 @@ class DanhMuc extends Eloquent
     protected $connection = 'mongodb';
     protected $collection = 'danhmuc';
     
-    protected $fillable = [
-        'huong','loaidat','loaigiayto','loaivanphong','loaitin','loaibatdongsan','loainha'
-    ];
-
+    public function dshuong()
+    {
+    	return $this->embedsMany('App\HuongNhaDat');
+    }
 }
 

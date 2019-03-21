@@ -1,6 +1,9 @@
 .topbar {
     height: 3rem;
 }
+input[type=radio],input[type=checkbox]{
+    transform: scale(1.5);
+}
 a.btn:hover {
      -webkit-transform: scale(1.1);
      -moz-transform: scale(1.1);
