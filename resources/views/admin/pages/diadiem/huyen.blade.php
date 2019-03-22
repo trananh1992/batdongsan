@@ -104,7 +104,7 @@
               <table class="table table-striped table-hovered">
               <tr>
               
-                <td>Tên tỉnh</td>
+                <td>Tên huyện</td>
                 <td><input class="form-control" id="thuyen" name="tenhuyen"  placeholder="Tên huyện" autofocus/></td>
               </tr>
             </table>

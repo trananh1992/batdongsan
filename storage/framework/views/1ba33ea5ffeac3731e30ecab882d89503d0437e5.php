@@ -12,48 +12,54 @@
                 </div>
             </div>
 
-            <div class="row">
-
+            <div class="row" id="hienthitimkiem">
+                <?php $__currentLoopData = $tintuc; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tin): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <!-- Single Featured Property -->
                 <div class="col-12 col-md-6 col-xl-4">
                     <div class="single-featured-property mb-50 wow fadeInUp" data-wow-delay="100ms">
                         <!-- Property Thumbnail -->
                         <div class="property-thumb">
-                            <img src="img/bg-img/feature1.jpg" alt="">
-
-                            <div class="tag">
+                            <?php if(isset($tin->hinhanh)): ?>
+                            <?php $__currentLoopData = $tin->hinhanh; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $hinh): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <a href="<?php echo e(asset('tintuc')); ?>/<?php echo e($tin->id); ?>"><img class="anhtin" height="210px" src="data:image/x-icon;base64, <?php echo e($hinh); ?> " alt=""></a>
+                            <?php break; ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php else: ?> 
+                            <a href="<?php echo e(asset('tintuc')); ?>/<?php echo e($tin->id); ?>"><img class="anhtin" height="210px" src="img/bg-img/feature2.jpg" alt=""></a>
+                            <?php endif; ?>
+                           <!--  <div class="tag">
                                 <span>For Sale</span>
-                            </div>
+                            </div> -->
                             <div class="list-price">
-                                <p>$945 679</p>
+                                <p><?php echo e($tin->gia); ?></p>
                             </div>
                         </div>
                         <!-- Property Content -->
                         <div class="property-content">
-                            <h5>Villa in Los Angeles</h5>
-                            <p class="location"><img src="img/icons/location.png" alt="">Upper Road 3411, no.34 CA</p>
-                            <p>Integer nec bibendum lacus. Suspendisse dictum enim sit amet libero malesuada.</p>
+                            <h5><?php echo substr($tin->tieude,0,100); ?>...</h5>
+                            <p class="location"><img src="img/icons/location.png" alt=""><?php echo e($tin->huyen); ?> - <?php echo e($tin->tinh); ?></p>
+                            <p><?php echo substr($tin->noidung,0,150); ?>...</p>
                             <div class="property-meta-data d-flex align-items-end justify-content-between">
-                                <div class="new-tag">
+                                <!-- <div class="new-tag">
                                     <img src="img/icons/new.png" alt="">
-                                </div>
-                                <div class="bathroom">
-                                    <img src="img/icons/bathtub.png" alt="">
-                                    <span>2</span>
-                                </div>
+                                </div> -->
                                 <div class="garage">
                                     <img src="img/icons/garage.png" alt="">
-                                    <span>2</span>
+                                    <span><?php echo e($tin->pngu); ?></span>
                                 </div>
-                                <div class="space">
+
+                                <div class="bathroom">
+                                    <img src="img/icons/bathtub.png" alt="">
+                                    <span><?php echo e($tin->pvsinh); ?></span>
+                                </div>                                <div class="space">
                                     <img src="img/icons/space.png" alt="">
-                                    <span>120 sq ft</span>
+                                    <span><?php echo e($tin->dientich); ?> m2</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 <!-- Single Featured Property -->
                 <div class="col-12 col-md-6 col-xl-4">
                     <div class="single-featured-property mb-50 wow fadeInUp" data-wow-delay="200ms">

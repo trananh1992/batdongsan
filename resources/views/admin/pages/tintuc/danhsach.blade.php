@@ -19,7 +19,8 @@
                       <th>STT</th>
                       <th>Tiêu đề</th>
                       <th>Nội dung</th>
-                      <th>Giá</th>
+                      <th>Ngày tạo</th>
+                      <th>Duyệt tin</th>
                       <th>Chỉnh sửa</th>
                     </tr>
                   </thead>
@@ -29,11 +30,20 @@
                       <td>{{$i++}}</td>
                       <td>{!! substr($t->tieude,0,100) !!}</td>
                       <td>{!! substr($t->noidung,0,100) !!}......</td>
-                      <td>{{$t->gia}}</td>
-                      <td><a href="tintucedit/{{$t->id}}" class="btn btn-primary a-btn-slide-text">
+                      <td>{{$t->created_at}}</td>
+                      <td id="duyet{{$t->id}}">@if(isset($t->duyettin) && $t->duyettin ==1)
+                        <button class="btn btn-success a-btn-slide-text" value="{{$t->id}}" duyet="1" onclick="duyettin(this)">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        <span><strong>Đã duyệt</strong></span></button> 
+                          @else
+                          <button class="btn btn-secondary a-btn-slide-text" value="{{$t->id}}" duyet="0" onclick="duyettin(this)">
                           <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                          <span><strong>Edit</strong></span>            
-                      </a>
+                          <span><strong>Chưa duyệt</strong></span></button> 
+                          @endif
+                      </td>
+                      <td><a href="tintuc/sua/{{$t->id}}" class="btn btn-primary a-btn-slide-text">
+                          <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                          <span><strong>Chỉnh sửa</strong></span></a>
                       </td>
                     </tr>
                     @endforeach
@@ -44,4 +54,38 @@
           </div>
 
         <a href="tintuc/them" /><button type="button" class="btn btn-success">Thêm mới</button></a>
+@endsection
+@section('script')
+<script type="text/javascript">
+  
+function duyettin(e) {
+  var duyet = $(e).attr('duyet');
+  var url = base_url+'/admin/tintuc/duyettin/'+e.value;
+   $.ajax({
+      type : 'get',
+      url : url,
+      // data : data,
+      dataType : 'json',    
+      success:function(responses)
+      {
+        if($.isEmptyObject(responses.error))
+        {
+          document.getElementById('duyet'+e.value).innerHTML = '';
+          if(duyet == 1 && confirm("Bạn muốn đổi trạng thái tin thành chưa duyệt phải không?") == true){
+          document.getElementById('duyet'+e.value).innerHTML += "<button class='btn btn-secondary a-btn-slide-text' value='"+e.value+"' duyet='0' onclick='duyettin(this)'>"+
+            "<span class='glyphicon glyphicon-edit' aria-hidden='true'></span>"+
+            "<span><strong>Chưa duyệt</strong></span></button>";
+          }
+          else{            
+          document.getElementById('duyet'+e.value).innerHTML += "<button class='btn btn-success a-btn-slide-text' value='"+e.value+"' duyet='1' onclick='duyettin(this)'>"+
+            "<span class='glyphicon glyphicon-edit' aria-hidden='true'></span>"+
+            "<span><strong>Đã duyệt</strong></span></button>";
+          }
+        }
+     }
+   });
+}
+
+</script>
+
 @endsection

@@ -18,7 +18,8 @@
                       <th>STT</th>
                       <th>Tiêu đề</th>
                       <th>Nội dung</th>
-                      <th>Giá</th>
+                      <th>Ngày tạo</th>
+                      <th>Duyệt tin</th>
                       <th>Chỉnh sửa</th>
                     </tr>
                   </thead>
@@ -28,11 +29,20 @@
                       <td><?php echo e($i++); ?></td>
                       <td><?php echo substr($t->tieude,0,100); ?></td>
                       <td><?php echo substr($t->noidung,0,100); ?>......</td>
-                      <td><?php echo e($t->gia); ?></td>
-                      <td><a href="tintucedit/<?php echo e($t->id); ?>" class="btn btn-primary a-btn-slide-text">
+                      <td><?php echo e($t->created_at); ?></td>
+                      <td id="duyet<?php echo e($t->id); ?>"><?php if(isset($t->duyettin) && $t->duyettin ==1): ?>
+                        <button class="btn btn-success a-btn-slide-text" value="<?php echo e($t->id); ?>" duyet="1" onclick="duyettin(this)">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        <span><strong>Đã duyệt</strong></span></button> 
+                          <?php else: ?>
+                          <button class="btn btn-secondary a-btn-slide-text" value="<?php echo e($t->id); ?>" duyet="0" onclick="duyettin(this)">
                           <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                          <span><strong>Edit</strong></span>            
-                      </a>
+                          <span><strong>Chưa duyệt</strong></span></button> 
+                          <?php endif; ?>
+                      </td>
+                      <td><a href="tintuc/sua/<?php echo e($t->id); ?>" class="btn btn-primary a-btn-slide-text">
+                          <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                          <span><strong>Chỉnh sửa</strong></span></a>
                       </td>
                     </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -43,5 +53,39 @@
           </div>
 
         <a href="tintuc/them" /><button type="button" class="btn btn-success">Thêm mới</button></a>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('script'); ?>
+<script type="text/javascript">
+  
+function duyettin(e) {
+  var duyet = $(e).attr('duyet');
+  var url = base_url+'/admin/tintuc/duyettin/'+e.value;
+   $.ajax({
+      type : 'get',
+      url : url,
+      // data : data,
+      dataType : 'json',    
+      success:function(responses)
+      {
+        if($.isEmptyObject(responses.error))
+        {
+          document.getElementById('duyet'+e.value).innerHTML = '';
+          if(duyet == 1 && confirm("Bạn muốn đổi trạng thái tin thành chưa duyệt phải không?") == true){
+          document.getElementById('duyet'+e.value).innerHTML += "<button class='btn btn-secondary a-btn-slide-text' value='"+e.value+"' duyet='0' onclick='duyettin(this)'>"+
+            "<span class='glyphicon glyphicon-edit' aria-hidden='true'></span>"+
+            "<span><strong>Chưa duyệt</strong></span></button>";
+          }
+          else{            
+          document.getElementById('duyet'+e.value).innerHTML += "<button class='btn btn-success a-btn-slide-text' value='"+e.value+"' duyet='1' onclick='duyettin(this)'>"+
+            "<span class='glyphicon glyphicon-edit' aria-hidden='true'></span>"+
+            "<span><strong>Đã duyệt</strong></span></button>";
+          }
+        }
+     }
+   });
+}
+
+</script>
+
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('admin.layouts.index', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>

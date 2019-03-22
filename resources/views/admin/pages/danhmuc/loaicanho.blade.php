@@ -9,7 +9,7 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Danh Mục Loại Tin</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Danh Mục Loại Căn Hộ</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -17,7 +17,7 @@
                   <thead>
                     <tr>
                       <th>STT</th>
-                      <th>Tên loại Tin</th>
+                      <th>Tên loại Căn hộ</th>
                       <th>Chỉnh sửa</th>
                       <th>Xóa</th>
                 
@@ -27,14 +27,14 @@
                     @foreach($dsdanhmuc as $item)
                     <tr>
                       <td>{{$i++}}</td>
-                      <td id="ten{{$item->_id}}">{!! $item->tenloaitin !!}</td>
+                      <td id="ten{{$item->_id}}">{!! $item->tenloaicanho !!}</td>
                      
                       <td><button class="btn btn-primary a-btn-slide-text" data-toggle="modal" data-target="#sua" value="{{$item->_id}}" onclick="sua(this)">
                           <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                           <span><strong>Chỉnh sửa</strong></span>            
                       </button>
                       </td>
-                        <td><button id="xoaloaitin{{$item->id}}"  value="{{$item->id}}" onclick="xoa(this)" class="btn btn-danger a-btn-slide-text">
+                        <td><button id="xoaloaicanho{{$item->id}}"  value="{{$item->id}}" onclick="xoa(this)" class="btn btn-danger a-btn-slide-text">
                           <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                           <span><strong>Xóa</strong></span>           
                       </a>
@@ -54,21 +54,21 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="lineModalLabel">Chỉnh sửa loại Tin</h3>
+        <h3 class="modal-title" id="lineModalLabel">Chỉnh sửa loại Căn hộ</h3>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
 
         <!-- content goes here -->
-        <form id="formsua" action="{{ URL::to('admin/danhmuc/sualoaitin')}}" method="POST" enctype="multipart/form-data">
+        <form id="formsua" action="{{ URL::to('admin/danhmuc/sualoaicanho')}}" method="POST" enctype="multipart/form-data">
           <div id="ketquasua" >
           </div>
           <input class="form-control" id="iddanhmuc" name="iddanhmuc"  hidden="true" />
           <table class="table table-striped table-hovered">
             <tr>
 
-              <td>Tên loại tin</td>
-              <td><input class="form-control" id="tendanhmuc" name="tendanhmuc"  placeholder="Tên loại tin" autofocus/></td>
+              <td>Tên loại Căn hộ</td>
+              <td><input class="form-control" id="tendanhmuc" name="tendanhmuc"  placeholder="Tên loại căn hộ" autofocus/></td>
             </tr>
           </table>
           <div style="float: right;">
@@ -88,20 +88,20 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="lineModalLabel">Thêm Loại Tin</h3>
+        <h3 class="modal-title" id="lineModalLabel">Thêm Loại Căn Hộ</h3>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
 
         <!-- content goes here -->
-        <form id="formthem" action="{{ URL::to('admin/danhmuc/themloaitin')}}" method="POST" enctype="multipart/form-data">
+        <form id="formthem" action="{{ URL::to('admin/danhmuc/themloaicanho')}}" method="POST" enctype="multipart/form-data">
           <div id="ketquathem" >
           </div>
           <table class="table table-striped table-hovered">
             <tr>
 
-              <td>Tên loại Tin</td>
-              <td><input class="form-control" id="txt_ten" name="ten"  placeholder="Tên loại tin" autofocus/></td>
+              <td>Tên loại Căn Hộ</td>
+              <td><input class="form-control" id="txt_ten" name="ten"  placeholder="Tên loại căn hộ" autofocus/></td>
             </tr>
           </table>
           <div style="float: right;">
@@ -127,8 +127,8 @@
 
 function xoa(e){
     var tendanhmuc= document.getElementById('ten'+e.value).innerHTML;
-    if(confirm("Bạn chắc chắn muốn xóa loại tin: "+tendanhmuc + " không ?") == true){
-      var url = base_url+'/admin/danhmuc/xoaloaitin/'+e.value;
+    if(confirm("Bạn chắc chắn muốn xóa loại căn hộ: "+tendanhmuc + " không ?") == true){
+      var url = base_url+'/admin/danhmuc/xoaloaicanho/'+e.value;
       $.ajax({
         type : 'get',
         url : url,

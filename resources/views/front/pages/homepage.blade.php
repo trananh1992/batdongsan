@@ -13,48 +13,54 @@
                 </div>
             </div>
 
-            <div class="row">
-
+            <div class="row" id="hienthitimkiem">
+                @foreach($tintuc as $tin)
                 <!-- Single Featured Property -->
                 <div class="col-12 col-md-6 col-xl-4">
                     <div class="single-featured-property mb-50 wow fadeInUp" data-wow-delay="100ms">
                         <!-- Property Thumbnail -->
                         <div class="property-thumb">
-                            <img src="img/bg-img/feature1.jpg" alt="">
-
-                            <div class="tag">
+                            @if(isset($tin->hinhanh))
+                            @foreach($tin->hinhanh as $hinh)
+                            <a href="{{asset('tintuc')}}/{{ $tin->id }}"><img class="anhtin" height="210px" src="data:image/x-icon;base64, {{$hinh}} " alt=""></a>
+                            @break
+                            @endforeach
+                            @else 
+                            <a href="{{asset('tintuc')}}/{{ $tin->id }}"><img class="anhtin" height="210px" src="img/bg-img/feature2.jpg" alt=""></a>
+                            @endif
+                           <!--  <div class="tag">
                                 <span>For Sale</span>
-                            </div>
+                            </div> -->
                             <div class="list-price">
-                                <p>$945 679</p>
+                                <p>{{$tin->gia}}</p>
                             </div>
                         </div>
                         <!-- Property Content -->
                         <div class="property-content">
-                            <h5>Villa in Los Angeles</h5>
-                            <p class="location"><img src="img/icons/location.png" alt="">Upper Road 3411, no.34 CA</p>
-                            <p>Integer nec bibendum lacus. Suspendisse dictum enim sit amet libero malesuada.</p>
+                            <h5>{!!substr($tin->tieude,0,100)!!}...</h5>
+                            <p class="location"><img src="img/icons/location.png" alt="">{{$tin->huyen}} - {{$tin->tinh}}</p>
+                            <p>{!!substr($tin->noidung,0,150)!!}...</p>
                             <div class="property-meta-data d-flex align-items-end justify-content-between">
-                                <div class="new-tag">
+                                <!-- <div class="new-tag">
                                     <img src="img/icons/new.png" alt="">
-                                </div>
-                                <div class="bathroom">
-                                    <img src="img/icons/bathtub.png" alt="">
-                                    <span>2</span>
-                                </div>
+                                </div> -->
                                 <div class="garage">
                                     <img src="img/icons/garage.png" alt="">
-                                    <span>2</span>
+                                    <span>{{$tin->pngu}}</span>
                                 </div>
-                                <div class="space">
+
+                                <div class="bathroom">
+                                    <img src="img/icons/bathtub.png" alt="">
+                                    <span>{{$tin->pvsinh}}</span>
+                                </div>                                <div class="space">
                                     <img src="img/icons/space.png" alt="">
-                                    <span>120 sq ft</span>
+                                    <span>{{$tin->dientich}} m2</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
+                @endforeach
                 <!-- Single Featured Property -->
                 <div class="col-12 col-md-6 col-xl-4">
                     <div class="single-featured-property mb-50 wow fadeInUp" data-wow-delay="200ms">

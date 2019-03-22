@@ -1,18 +1,18 @@
-@extends('admin.layouts.index')
-@section('contentadmin')
-@if (\Session::has('success'))
+<?php /* D:\xampp\htdocs\batdongsan\resources\views/admin/pages/tintuc/sua.blade.php */ ?>
+<?php $__env->startSection('contentadmin'); ?>
+<?php if(\Session::has('success')): ?>
       <div class="alert alert-success">
-        <p>{{ \Session::get('success') }}</p>
+        <p><?php echo e(\Session::get('success')); ?></p>
       </div><br />
-     @endif
-@foreach ($errors->all() as $error)
-      <li>{{ $error }}</li>
-  @endforeach
-<a href="{{ asset('admin/tintuc') }}"><button type="button" class="btn btn-secondary">&laquo; Quay lại</button></a>
+     <?php endif; ?>
+<?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+      <li><?php echo e($error); ?></li>
+  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+<a href="<?php echo e(asset('admin/tintuc')); ?>"><button type="button" class="btn btn-secondary">&laquo; Quay lại</button></a>
 <p>
-<form method="POST" action="{{ asset('/admin/tintuc/sua') }}" enctype="multipart/form-data">
-<input type="hidden" name="_token" value="{{ csrf_token() }}">
-<input type="hidden" id="id" name="id" value="{{ $tintuc->id }}">
+<form method="POST" action="<?php echo e(asset('/admin/tintuc/sua')); ?>" enctype="multipart/form-data">
+<input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+<input type="hidden" id="id" name="id" value="<?php echo e($tintuc->id); ?>">
   <div class="form-group">
     <label>Chọn danh mục tin đăng</label>
   <select class="form-control" id="dmtin" name="dmtin">
@@ -38,42 +38,42 @@
   <label>Chọn tỉnh thành</label>
   <select class="form-control" id="tinh" name="tinh">
     <option value="0">---Chọn tỉnh thành---</option>
-    @foreach($tinh as $t)
-      @if($t->ten == $tintuc->tinh)
-      <option id="tinh{{$t->id}}" value="{{$t->id}}" selected="selected" >{{$t->ten}}</option>
-      @else 
-      <option id="tinh{{$t->id}}" value="{{$t->id}}" >{{$t->ten}}</option>
-      @endif
-    @endforeach
+    <?php $__currentLoopData = $tinh; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $t): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+      <?php if($t->ten == $tintuc->tinh): ?>
+      <option id="tinh<?php echo e($t->id); ?>" value="<?php echo e($t->id); ?>" selected="selected" ><?php echo e($t->ten); ?></option>
+      <?php else: ?> 
+      <option id="tinh<?php echo e($t->id); ?>" value="<?php echo e($t->id); ?>" ><?php echo e($t->ten); ?></option>
+      <?php endif; ?>
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
   </select>
 </div>
 <div class="form-group" id="divhuyen">
   <label>Chọn quận, huyện</label>
   <select class="form-control" id="huyen" name="huyen">
-    @foreach($tinh->where('ten',$tintuc->tinh)->first()->dshuyen as $h)
-      @if($h->ten == $tintuc->huyen)
-      <option id="huyen{{$h->id}}" value="{{$h->id}}" selected="selected" >{{$h->ten}}</option>
-      @else 
-      <option id="huyen{{$h->id}}" value="{{$h->id}}" >{{$h->ten}}</option>
-      @endif
-    @endforeach
+    <?php $__currentLoopData = $tinh->where('ten',$tintuc->tinh)->first()->dshuyen; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $h): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+      <?php if($h->ten == $tintuc->huyen): ?>
+      <option id="huyen<?php echo e($h->id); ?>" value="<?php echo e($h->id); ?>" selected="selected" ><?php echo e($h->ten); ?></option>
+      <?php else: ?> 
+      <option id="huyen<?php echo e($h->id); ?>" value="<?php echo e($h->id); ?>" ><?php echo e($h->ten); ?></option>
+      <?php endif; ?>
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
   </select>
 </div>
 <div class="form-group" id="divxa" >
   <label>Chọn phường, xã</label>
   <select class="form-control" id="xa" name="xa">
-     @foreach($tinh->where('ten',$tintuc->tinh)->first()->dshuyen->where('ten',$tintuc->huyen)->first()->dsxa as $x)
-      @if($x->ten == $tintuc->xa)
-      <option id="xa{{$x->id}}" value="{{$x->id}}" selected="selected" >{{$x->ten}}</option>
-      @else 
-      <option id="xa{{$x->id}}" value="{{$x->id}}" >{{$x->ten}}</option>
-      @endif
-    @endforeach
+     <?php $__currentLoopData = $tinh->where('ten',$tintuc->tinh)->first()->dshuyen->where('ten',$tintuc->huyen)->first()->dsxa; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $x): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+      <?php if($x->ten == $tintuc->xa): ?>
+      <option id="xa<?php echo e($x->id); ?>" value="<?php echo e($x->id); ?>" selected="selected" ><?php echo e($x->ten); ?></option>
+      <?php else: ?> 
+      <option id="xa<?php echo e($x->id); ?>" value="<?php echo e($x->id); ?>" ><?php echo e($x->ten); ?></option>
+      <?php endif; ?>
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
   </select>
 </div>
   <div class="form-group" id="divtenduong" >
     <label>Số nhà, tên đường</label>
-    <input type="text" class="form-control" id="tenduong" name="tenduong" value="{{$tintuc->tenduong}}">
+    <input type="text" class="form-control" id="tenduong" name="tenduong" value="<?php echo e($tintuc->tenduong); ?>">
   </div>
   <div class="form-group"  id="divloaihinhcanho" style="display: none;">
   <label>Chọn loại hình căn hộ</label>
@@ -106,57 +106,57 @@
 </div>
 <div class="form-group" id="divnohau" style="display: none;">
 <label class="checkbox-inline">
-  @if($tintuc->nohau =="Nở hậu" )
+  <?php if($tintuc->nohau =="Nở hậu" ): ?>
   <input type="checkbox" name="nohau" value="Nở hậu" checked="checked"> Nở hậu</label>
-  @else  
+  <?php else: ?>  
   <input type="checkbox" name="nohau" value="Nở hậu"> Nở hậu</label>
-  @endif
+  <?php endif; ?>
 </div>
   <div class="form-group" id="divbanla" style="display: none;">
   <label>Bạn là</label><br>
   <label class="radio-inline">
-    @if($tintuc->banla == 'Cá nhân')
+    <?php if($tintuc->banla == 'Cá nhân'): ?>
     <input type="radio" name="banla" value="Cá nhân" checked="checked" > Cá nhân</label><br>
-    @else
+    <?php else: ?>
     <input type="radio" name="banla" value="Cá nhân" > Cá nhân</label><br>
-    @endif
+    <?php endif; ?>
   <label class="radio-inline">
-    @if($tintuc->banla == 'Môi giới')
+    <?php if($tintuc->banla == 'Môi giới'): ?>
     <input type="radio" name="banla" value="Môi giới" checked="checked"> Môi giới</label>
-    @else
+    <?php else: ?>
     <input type="radio" name="banla" value="Môi giới"> Môi giới</label>
-    @endif
+    <?php endif; ?>
 </div>
     <div class="form-group" id="divgia" >
     <label>Giá</label>
-    <input type="number" class="form-control col-sm-3 col-md-6 col-lg-4" name="gia" value="{{$tintuc->gia}}">
+    <input type="number" class="form-control col-sm-3 col-md-6 col-lg-4" name="gia" value="<?php echo e($tintuc->gia); ?>">
   </div>
 <div class="form-group" id="divpngu">
     <label>Số phòng ngủ</label>
-    <input type="number" class="form-control col-sm-3 col-md-6 col-lg-4" name="pngu" value="{{$tintuc->pngu}}">
+    <input type="number" class="form-control col-sm-3 col-md-6 col-lg-4" name="pngu" value="<?php echo e($tintuc->pngu); ?>">
   </div>
   <div class="form-group" id="divpvsinh" >
     <label>Số phòng vệ sinh</label>
-    <input type="number" class="form-control col-sm-3 col-md-6 col-lg-4" name="pvsinh" value="{{$tintuc->pvsinh}}">
+    <input type="number" class="form-control col-sm-3 col-md-6 col-lg-4" name="pvsinh" value="<?php echo e($tintuc->pvsinh); ?>">
   </div>
   <div class="form-group"  id="divdientich">
     <label>Diện tích</label>
-    <input type="number" class="form-control col-sm-3 col-md-6 col-lg-4" name="dientich" value="{{$tintuc->dientich}}">
+    <input type="number" class="form-control col-sm-3 col-md-6 col-lg-4" name="dientich" value="<?php echo e($tintuc->dientich); ?>">
   </div>
 <div class="form-group" id="divddnhadat">
   <label>Đặc điểm nhà đất</label> <br>
   <label class="radio-inline">
-    @if($tintuc->ddnhadat == "Hẻm xe hơi")
+    <?php if($tintuc->ddnhadat == "Hẻm xe hơi"): ?>
     <input type="radio" name="ddnhadat" value="Hẻm xe hơi" checked="checked"> Hẻm xe hơi</label><br>
-    @else
+    <?php else: ?>
     <input type="radio" name="ddnhadat" value="Hẻm xe hơi"> Hẻm xe hơi</label><br>
-    @endif
+    <?php endif; ?>
   <label class="radio-inline">
-    @if($tintuc->ddnhadat == "Mặt tiền")
+    <?php if($tintuc->ddnhadat == "Mặt tiền"): ?>
     <input type="radio" name="ddnhadat" value="Mặt tiền" checked="checked"> Mặt tiền</label>
-    @else
+    <?php else: ?>
     <input type="radio" name="ddnhadat" value="Mặt tiền"> Mặt tiền</label>
-    @endif
+    <?php endif; ?>
 </div>
 
   <div class="form-group"  id="divhuong" style="display: none;">
@@ -180,25 +180,25 @@
 </div>
   <div class="form-group">
     <label>Tiêu đề tin</label>
-    <input type="text" class="form-control" name="tieude" value="{{$tintuc->tieude}}">
+    <input type="text" class="form-control" name="tieude" value="<?php echo e($tintuc->tieude); ?>">
   </div>
   <div class="form-group">
     <label>Nội dung tin</label>
-    <textarea class="form-control" rows="5" id="noidung" name="noidung">{{$tintuc->noidung}}</textarea>
+    <textarea class="form-control" rows="5" id="noidung" name="noidung"><?php echo e($tintuc->noidung); ?></textarea>
   </div>
 
   <div class="form-group">
     <label>Hình ảnh tin</label>
     <div class="row" id="hinhanh">
-    @if(isset($tintuc->hinhanh))
+    <?php if(isset($tintuc->hinhanh)): ?>
     <?php $i=0; ?>
-    @foreach($tintuc->hinhanh as $hinh)
+    <?php $__currentLoopData = $tintuc->hinhanh; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $hinh): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
     <div  class="column" style="margin: 0px 10px 10px 10px;">
-        <img width="200px" height="100px" src="data:image/x-icon;base64, {{$hinh}} "/>
-        <p><button type="button" class="btn btn-danger" style="width: 100%;margin-top: 5px;" value="{{$i++}}" onclick="xoahinh(this)">Xóa hình</button></p>
+        <img width="200px" height="100px" src="data:image/x-icon;base64, <?php echo e($hinh); ?> "/>
+        <p><button type="button" class="btn btn-danger" style="width: 100%;margin-top: 5px;" value="<?php echo e($i++); ?>" onclick="xoahinh(this)">Xóa hình</button></p>
     </div>
-    @endforeach
-    @endif
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    <?php endif; ?>
     </div>
     <p></p>
     <input type="file" class="form-control" name="hinhanh[]" multiple="true">
@@ -208,9 +208,9 @@
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('script')
+<?php $__env->startSection('script'); ?>
 <script type="text/javascript">
   var dmtin,loaitin,tinh,huyen,xa;
   //--------------------------------------
@@ -390,4 +390,5 @@
 });
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.layouts.index', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>

@@ -13,24 +13,23 @@
 <form method="POST" action="<?php echo e(asset('/admin/tintuc/them')); ?>" enctype="multipart/form-data">
 <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
   <div class="form-group">
-    <label>Chọn danh mục tin đăng</label>
+  <label>Chọn danh mục tin đăng</label>
+  <?php $loaibds = App\LoaiBDS::where('ten','DanhMucLoaiBDS')->first()->dsloaibds; ?> 
   <select class="form-control" id="dmtin" name="dmtin">
     <option value="0">---Chọn danh mục tin đăng---</option>
-    <option id="dmtin1" value="Căn hộ/Chung cư">Căn hộ/Chung cư</option>
-    <option id="dmtin2" value="Nhà ở">Nhà ở</option>
-    <option id="dmtin3" value="Đất">Đất</option>
-    <option id="dmtin4" value="Văn phòng, mặt bằng kinh doanh">Văn phòng, mặt bằng kinh doanh</option>
-    <option id="dmtin5" value="Phòng trọ">Phòng trọ</option>
+    <?php $__currentLoopData = $loaibds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bds): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <option value="<?php echo e($bds['tenloaibds']); ?>"><?php echo e($bds['tenloaibds']); ?></option> 
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
   </select>
 </div>
 <div class="form-group" id="divloaitin" style="display: none;">
   <label>Chọn loại tin đăng</label>
+  <?php $loaitin = App\LoaiTin::where('ten','DanhMucLoaiTin')->first()->dsloaitin; ?> 
   <select class="form-control" id="loaitin" name="loaitin">
     <option value="0">---Chọn loại tin đăng---</option>
-    <option id="loaitincanban" value="Cần bán">Cần bán</option>
-    <option id="loaitin2" value="Cho thuê">Cho thuê</option>
-    <option id="loaitincanmua" value="Cần mua">Cần mua</option>
-    <option id="loaitin4" value="Cần thuê">Cần thuê</option>
+    <?php $__currentLoopData = $loaitin; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lt): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <option id="loaitin<?php echo e($lt['tenloaitin']); ?>" value="<?php echo e($lt['tenloaitin']); ?>"><?php echo e($lt['tenloaitin']); ?></option>
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
   </select>
 </div>
 <div class="form-group" id="divtinh" style="display: none;">
@@ -59,31 +58,32 @@
   </div>
   <div class="form-group"  id="divloaihinhcanho" style="display: none;">
   <label>Chọn loại hình căn hộ</label>
+  <?php $loaicanho = App\LoaiCanHo::where('ten','DanhMucLoaiCanHo')->first()->dsloaicanho; ?> 
   <select class="form-control" id="loaihinhcanho" name="loaihinhcanho">
     <option value="0">---Chọn loại hình căn hộ---</option>
-    <option value="1">Căn hộ</option>
-    <option value="2">Condotel</option>
-    <option value="3">Duplex</option>
-    <option value="4">Penthouse</option>
+    <?php $__currentLoopData = $loaicanho; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $canho): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <option value="<?php echo e($canho['tenloaicanho']); ?>"><?php echo e($canho['tenloaicanho']); ?></option>
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
   </select>
 </div>  
 <div class="form-group" id="divloaihinhnhao" style="display: none;">
   <label>Chọn loại hình nhà ở</label>
+  <?php $loainhao = App\LoaiNha::where('ten','DanhMucLoaiNha')->first()->dsloainha; ?> 
   <select class="form-control" id="loaihinhnhao" name="loaihinhnhao">
     <option value="0">---Chọn loại hình nhà ở---</option>
-    <option value="Nhà ở">Nhà ở</option>
-    <option value="Biệt thự">Biệt thự</option>
-    <option value="Duplex">Duplex</option>
-    <option value="Penthouse">Penthouse</option>
+    <?php $__currentLoopData = $loainhao; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $no): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <option value="<?php echo e($no['tenloainha']); ?>"><?php echo e($no['tenloainha']); ?></option>
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
   </select>
 </div>
   <div class="form-group"  id="divloaihinhvanphong" style="display: none;">
   <label>Chọn loại hình văn phòng</label>
+  <?php $loaivp = App\LoaiNha::where('ten','DanhMucLoaiVP')->first()->dsloaivp; ?> 
   <select class="form-control" id="loaihinhvanphong" name="loaihinhvanphong">
     <option value="0">---Chọn loại hình văn phòng---</option>
-    <option value="1">Shophouse</option>
-    <option value="2">Officetel</option>
-    <option value="3">Văn phòng, mặt bằng kinh doanh</option>
+    <?php $__currentLoopData = $loaivp; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $vp): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <option value="<?php echo e($vp['tenloaivp']); ?>"><?php echo e($vp['tenloaivp']); ?></option>
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
   </select>
 </div>
 <div class="form-group" id="divnohau" style="display: none;">
@@ -112,27 +112,31 @@
   </div>
 <div class="form-group" id="divddnhadat" style="display: none;">
   <label>Đặc điểm nhà đất</label> <br>
-  <label class="radio-inline"><input type="radio" name="ddnhadat" value="Hẻm xe hơi"> Hẻm xe hơi</label><br>
-  <label class="radio-inline"><input type="radio" name="ddnhadat" value="Mặt tiền"> Mặt tiền</label>
+  <?php $ddnd = App\DacDiemNhaDat::where('ten','DanhMucDacDiemNhaDat')->first()->dsdacdiemnhadat; ?>
+    <?php $__currentLoopData = $ddnd; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $nd): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <label class="radio-inline"><input type="radio" name="ddnhadat" value="<?php echo e($nd['tendacdiemnhadat']); ?>"> <?php echo e($nd['tendacdiemnhadat']); ?></label><br>
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+  
 </div>
 
   <div class="form-group"  id="divhuong" style="display: none;">
   <label>Chọn hướng</label>
+  <?php $dshuong = App\LoaiNha::where('ten','DanhMucHuong')->first()->dshuong; ?> 
   <select class="form-control" id="huong" name="huong">
     <option value="0">---Chọn hướng---</option>
-    <option value="Đông">Đông</option>
-    <option value="Tây">Tây</option>
-    <option value="Nam">Nam</option>
-    <option value="Bắc">Bắc</option>
+    <?php $__currentLoopData = $dshuong; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $huong): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <option value="<?php echo e($huong['tenhuong']); ?>"><?php echo e($huong['tenhuong']); ?></option>
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
   </select>
 </div>
   <div class="form-group"  id="divgtpl" style="display: none;">
   <label>Chọn giấy tờ pháp lý</label>
+  <?php $giayto = App\LoaiNha::where('ten','DanhMucLoaiGiayTo')->first()->dsloaigiayto; ?> 
   <select class="form-control" id="gtpl" name="gtpl">
     <option value="0">---Chọn giấy tờ pháp lý---</option>
-    <option value="Đã có sổ đỏ/sổ hồng">Đã có sổ đỏ/sổ hồng</option>
-    <option value="Đang chờ bàn giao sổ">Đang chờ bàn giao sổ</option>
-    <option value="Giấy tay, giấy tờ khác">Giấy tay, giấy tờ khác</option>
+    <?php $__currentLoopData = $giayto; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gt): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <option value="<?php echo e($gt['tenloaigiayto']); ?>"><?php echo e($gt['tenloaigiayto']); ?></option>
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
   </select>
 </div>
   <div class="form-group">
@@ -159,8 +163,6 @@
 <script type="text/javascript">
   var dmtin,loaitin,tinh,huyen,xa;
 
- CKEDITOR.replace('noidung'); 
-
 // --------------------------------------
  $("#dmtin").change(function(){
   dmtin = $("#dmtin").val();
@@ -174,16 +176,16 @@
     document.getElementById("divpvsinh").style.display = "";
     document.getElementById("divddnhadat").style.display = "";
     if(dmtin == 'Phòng trọ'){
-      document.getElementById("loaitincanban").style.display = "none";
-      document.getElementById("loaitincanmua").style.display = "none";
+      document.getElementById("loaitinCần bán").style.display = "none";
+      document.getElementById("loaitinCần mua").style.display = "none";
       document.getElementById("divloaihinhcanho").style.display = "none";
       document.getElementById("divloaihinhnhao").style.display = "none";
       document.getElementById("divloaihinhvanphong").style.display = "none";
       document.getElementById("divpngu").style.display = "none";
       document.getElementById("divpvsinh").style.display = "none";
     }else{
-      document.getElementById("loaitincanban").style.display = "";
-      document.getElementById("loaitincanmua").style.display = "";
+      document.getElementById("loaitinCần bán").style.display = "";
+      document.getElementById("loaitinCần mua").style.display = "";
     }
     if(dmtin == 'Căn hộ/Chung cư'){
       document.getElementById("divloaihinhcanho").style.display = "";

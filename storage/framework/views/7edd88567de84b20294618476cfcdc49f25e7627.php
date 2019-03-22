@@ -6,10 +6,11 @@
                     <div class="advanced-search-form">
                         <!-- Search Title -->
                         <div class="search-title">
-                            <p>Search for your home</p>
+                            <p style="color: white !important;">Bạn muốn tìm gì?</p>
                         </div>
                         <!-- Search Form -->
-                        <form action="#" method="post" id="advanceSearch">
+                        <form id="formsearc" action="<?php echo e(URL::to('search')); ?>" method="post" id="advanceSearch">
+                            <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
                             <div class="row">
 
                                 <div class="col-12 col-md-4 col-lg-3">
@@ -17,25 +18,32 @@
                                         <input type="input" class="form-control" name="input" placeholder="Keyword">
                                     </div>
                                 </div>
-
+                                <?php $tinh = App\Tinh::all(); ?> 
                                 <div class="col-12 col-md-4 col-lg-3">
                                     <div class="form-group">
-                                        <select class="form-control" id="cities">
-                                            <option>All Cities</option>
-                                            <option>Riga</option>
-                                            <option>Melbourne</option>
-                                            <option>Vienna</option>
-                                            <option>Vancouver</option>
-                                            <option>Toronto</option>
-                                            <option>Calgary</option>
-                                            <option>Adelaide</option>
-                                            <option>Perth</option>
-                                            <option>Auckland</option>
-                                            <option>Helsinki</option>
+                                        <select class="form-control" id="sltinh" name="tinh" >
+                                            <option value="0">Tỉnh - Thành phố</option>
+                                            <?php $__currentLoopData = $tinh; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $t): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($t->id); ?>"><?php echo e($t->ten); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                     </div>
                                 </div>
 
+                                <div class="col-12 col-md-4 col-lg-3">
+                                    <div class="form-group">
+                                        <select class="form-control" id="slhuyen" name="huyen">
+                                            <option>Quận - Huyện</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-3">
+                                    <div class="form-group">
+                                        <select class="form-control" id="slxa" name="xa">
+                                            <option>Phường - Xã</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-12 col-md-4 col-lg-3">
                                     <div class="form-group">
                                         <select class="form-control" id="catagories">

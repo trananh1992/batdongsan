@@ -2,11 +2,11 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="admin">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3">Bất Động Sản</sup></div>
       </a>
 
       <!-- Divider -->
@@ -14,9 +14,9 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="admin">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
+          <span>Chức năng</span></a>
       </li>
 
       <!-- Divider -->
@@ -24,20 +24,27 @@
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        Interface
+        Cập nhật
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-cog"></i>
-          <span>Components</span>
+          <span>Danh Mục</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Custom Components:</h6>
-            <a class="collapse-item" href="buttons.html">Buttons</a>
-            <a class="collapse-item" href="cards.html">Cards</a>
+            <h6 class="collapse-header">Danh sách:</h6>
+            <a class="collapse-item" href="<?php echo e(URL::to('admin/danhmuc/loaitin')); ?>">Loại Tin</a>
+            <a class="collapse-item" href="<?php echo e(URL::to('admin/danhmuc/loaibds')); ?>">Loại Bất Động Sản</a>
+            <a class="collapse-item" href="<?php echo e(URL::to('admin/danhmuc/loainha')); ?>">Loại Nhà</a>
+            <a class="collapse-item" href="<?php echo e(URL::to('admin/danhmuc/loaidat')); ?>">Loại Đất</a>
+            <a class="collapse-item" href="<?php echo e(URL::to('admin/danhmuc/loaivp')); ?>">Loại Văn Phòng</a>
+            <a class="collapse-item" href="<?php echo e(URL::to('admin/danhmuc/loaigiayto')); ?>">Loại Giấy tờ</a>
+             <a class="collapse-item" href="<?php echo e(URL::to('admin/danhmuc/huong')); ?>">Hướng</a>
+             <a class="collapse-item" href="<?php echo e(URL::to('admin/danhmuc/dacdiemnhadat')); ?>">Đặc điểm nhà đất</a>
+             <a class="collapse-item" href="<?php echo e(URL::to('admin/danhmuc/loaicanho')); ?>">Loại căn hộ</a>
           </div>
         </div>
       </li>
@@ -46,15 +53,15 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
           <i class="fas fa-fw fa-wrench"></i>
-          <span>Utilities</span>
+          <span>Quản lý người dùng</span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Custom Utilities:</h6>
-            <a class="collapse-item" href="utilities-color.html">Colors</a>
-            <a class="collapse-item" href="utilities-border.html">Borders</a>
-            <a class="collapse-item" href="utilities-animation.html">Animations</a>
-            <a class="collapse-item" href="utilities-other.html">Other</a>
+            <h6 class="collapse-header">Danh sách:</h6>
+            <a class="collapse-item" href="utilities-color.html">Thêm mới</a>
+            <a class="collapse-item" href="utilities-border.html">Cập nhật thông tin</a>
+            <a class="collapse-item" href="utilities-border.html">Đổi mật khẩu</a>
+            <a class="collapse-item" href="utilities-animation.html">Xóa người dùng</a>
           </div>
         </div>
       </li>
@@ -64,14 +71,14 @@
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        Addons
+        QUẢN LÝ TIN ĐĂNG
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
           <i class="fas fa-fw fa-folder"></i>
-          <span>Pages</span>
+          <span>Duyệt tin</span>
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
@@ -99,6 +106,30 @@
         <a class="nav-link" href="tables.html">
           <i class="fas fa-fw fa-table"></i>
           <span>Tables</span></a>
+      </li>
+
+    
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        TÀI KHOẢN
+      </div>
+
+          <!-- Nav Item - Charts -->
+      <li class="nav-item">
+        <a class="nav-link" href="charts.html">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Đổi mật khẩu</span></a>
+      </li>
+
+      <!-- Nav Item - Tables -->
+      <li class="nav-item">
+        <a class="nav-link" href="tables.html">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Đăng xuất</span></a>
       </li>
 
       <!-- Divider -->

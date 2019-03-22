@@ -10,29 +10,31 @@
                     <div class="single-blog-area">
                         <!-- Post Thumbnail -->
                         <div class="blog-post-thumbnail">
-                            <img src="img/blog-img/blog3.jpg" alt="">
+                            <img src="{{asset('img/blog-img/blog3.jpg')}}" alt="">
                         </div>
                         <!-- Post Content -->
                         <div class="post-content">
                             <!-- Date -->
                             <div class="post-date">
-                                <a href="#">March 09, 2018</a>
+                                <a href="#">{{date_format($tintuc->created_at,"d/m/Y")}}</a>
                             </div>
                             <!-- Headline -->
                             <a href="#" class="headline">{{$tintuc->tieude}}</a>
                             <!-- Post Meta -->
                             <div class="post-meta">
-                                <p>By <a href="#">Admin</a> | in <a href="#">Uncategorized</a> | <a href="#">2 Comments</a></p>
+                                <p>By <a href="#">Admin</a> | in <a href="#">{{$tintuc->dmtin}}</a></p>
                             </div>
-                            <p>{!!$tintuc->noidung!!}.</p>
+                            <p>{!!$tintuc->noidung!!}</p>
+                            @if(isset($tintuc->hinhanh))
                             <p>Hình ảnh: </p>
                             @foreach($tintuc->hinhanh as $hinh)
                                 <img src="data:image/x-icon;base64, {{$hinh}} " />
                             @endforeach
+                            @endif
                         </div>
                     </div>
 
-                    <div class="comments-area">
+                    <div class="comments-area" style="display: none;">
                         <h5>4 Comments</h5>
                         <ol>
                             <!-- Single Comment Area -->
@@ -40,7 +42,7 @@
                                 <div class="comment-wrapper d-flex">
                                     <!-- Comment Meta -->
                                     <div class="comment-author">
-                                        <img src="img/blog-img/c-1.jpg" alt="">
+                                        <img src="{{asset('img/blog-img/c-1.jpg')}}" alt="">
                                     </div>
                                     <!-- Comment Content -->
                                     <div class="comment-content">
@@ -57,7 +59,7 @@
                                         <div class="comment-wrapper d-flex">
                                             <!-- Comment Meta -->
                                             <div class="comment-author">
-                                                <img src="img/blog-img/c-2.jpg" alt="">
+                                                <img src="{{asset('img/blog-img/c-2.jpg')}}" alt="">
                                             </div>
                                             <!-- Comment Content -->
                                             <div class="comment-content">
@@ -76,7 +78,7 @@
                                 <div class="comment-wrapper d-flex">
                                     <!-- Comment Meta -->
                                     <div class="comment-author">
-                                        <img src="img/blog-img/c-3.jpg" alt="">
+                                        <img src="{{asset('img/blog-img/c-3.jpg')}}" alt="">
                                     </div>
                                     <!-- Comment Content -->
                                     <div class="comment-content">
@@ -93,7 +95,7 @@
                     </div>
 
                     <!-- Leave A Comment -->
-                    <div class="leave-comment-area mt-70 clearfix">
+                    <div class="leave-comment-area mt-70 clearfix" style="display: none;">
                         <div class="comment-form">
                             <h5>Leave a reply</h5>
 
@@ -118,7 +120,7 @@
                     <div class="blog-sidebar-area">
 
                         <!-- Search Widget -->
-                        <div class="search-widget-area mb-70">
+                        <div class="search-widget-area mb-70" style="display: none;">
                             <form action="#" method="get">
                                 <input type="search" name="search" id="search" placeholder="Search">
                                 <button type="submit"><i class="fa fa-search"></i></button>
@@ -156,7 +158,7 @@
                             <div class="single-featured-property">
                                 <!-- Property Thumbnail -->
                                 <div class="property-thumb">
-                                    <img src="img/bg-img/feature1.jpg" alt="">
+                                    <img src="{{asset('img/bg-img/feature1.jpg')}}" alt="">
 
                                     <div class="tag">
                                         <span>For Sale</span>
@@ -168,22 +170,22 @@
                                 <!-- Property Content -->
                                 <div class="property-content">
                                     <h5>Villa in Los Angeles</h5>
-                                    <p class="location"><img src="img/icons/location.png" alt="">Upper Road 3411, no.34 CA</p>
+                                    <p class="location"><img src="{{asset('img/icons/location.png')}}" alt="">Upper Road 3411, no.34 CA</p>
                                     <p>Integer nec bibendum lacus. Suspendisse dictum enim sit amet libero malesuada.</p>
                                     <div class="property-meta-data d-flex align-items-end justify-content-between">
                                         <div class="new-tag">
-                                            <img src="img/icons/new.png" alt="">
+                                            <img src="{{asset('img/icons/new.png')}}" alt="">
                                         </div>
                                         <div class="bathroom">
-                                            <img src="img/icons/bathtub.png" alt="">
+                                            <img src="{{asset('img/icons/bathtub.png')}}" alt="">
                                             <span>2</span>
                                         </div>
                                         <div class="garage">
-                                            <img src="img/icons/garage.png" alt="">
+                                            <img src="{{asset('img/icons/garage.png')}}" alt="">
                                             <span>2</span>
                                         </div>
                                         <div class="space">
-                                            <img src="img/icons/space.png" alt="">
+                                            <img src="{{asset('img/icons/space.png')}}" alt="">
                                             <span>120 sq ft</span>
                                         </div>
                                     </div>
@@ -194,7 +196,7 @@
                             <div class="single-featured-property">
                                 <!-- Property Thumbnail -->
                                 <div class="property-thumb">
-                                    <img src="img/bg-img/feature2.jpg" alt="">
+                                    <img src="{{asset('img/bg-img/feature2.jpg')}}" alt="">
 
                                     <div class="tag">
                                         <span>For Sale</span>
@@ -206,22 +208,22 @@
                                 <!-- Property Content -->
                                 <div class="property-content">
                                     <h5>Town House in Los Angeles</h5>
-                                    <p class="location"><img src="img/icons/location.png" alt="">Upper Road 3411, no.34 CA</p>
+                                    <p class="location"><img src="{{asset('img/icons/location.png')}}" alt="">Upper Road 3411, no.34 CA</p>
                                     <p>Integer nec bibendum lacus. Suspendisse dictum enim sit amet libero malesuada.</p>
                                     <div class="property-meta-data d-flex align-items-end justify-content-between">
                                         <div class="new-tag">
-                                            <img src="img/icons/new.png" alt="">
+                                            <img src="{{asset('img/icons/new.png')}}" alt="">
                                         </div>
                                         <div class="bathroom">
-                                            <img src="img/icons/bathtub.png" alt="">
+                                            <img src="{{asset('img/icons/bathtub.png')}}" alt="">
                                             <span>2</span>
                                         </div>
                                         <div class="garage">
-                                            <img src="img/icons/garage.png" alt="">
+                                            <img src="{{asset('img/icons/garage.png')}}" alt="">
                                             <span>2</span>
                                         </div>
                                         <div class="space">
-                                            <img src="img/icons/space.png" alt="">
+                                            <img src="{{asset('img/icons/space.png')}}" alt="">
                                             <span>120 sq ft</span>
                                         </div>
                                     </div>

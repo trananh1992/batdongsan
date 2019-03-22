@@ -17,6 +17,9 @@ a.btn {
      -moz-transition-duration: 0.5s;
      -o-transition-duration: 0.5s;
 }
+p.alert{
+    margin-bottom: 0rem;
+}
 footer.sticky-footer {
     padding: 0.7rem;
 }

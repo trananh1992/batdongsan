@@ -24,4 +24,12 @@ class UserController extends Controller
     		return "Đăng nhập không thành công";
     	}
     }
+    public function postdangky(Request $request)
+    {
+        $user = new User();
+        $user->username = $request->username;
+        $user->password = $request->password;
+        $user->save();
+        
+    }
 }

@@ -1,6 +1,5 @@
-@extends('admin.layouts.index')
-
-@section('contentadmin')
+<?php /* D:\xampp\htdocs\batdongsan\resources\views/admin/pages/danhmuc/dacdiemnhadat.blade.php */ ?>
+<?php $__env->startSection('contentadmin'); ?>
 
           <!-- Page Heading -->
           <!-- <h1 class="h3 mb-2 text-gray-800">Tables</h1>
@@ -9,7 +8,7 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Danh Mục Loại Tin</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Danh Mục Đặc Điểm Nhà Đất</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -17,30 +16,30 @@
                   <thead>
                     <tr>
                       <th>STT</th>
-                      <th>Tên loại Tin</th>
+                      <th>Tên đặc điểm nhà đất</th>
                       <th>Chỉnh sửa</th>
                       <th>Xóa</th>
                 
                     </tr>
                   </thead>
                   <?php $i=1; ?>
-                    @foreach($dsdanhmuc as $item)
+                    <?php $__currentLoopData = $dsdanhmuc; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
-                      <td>{{$i++}}</td>
-                      <td id="ten{{$item->_id}}">{!! $item->tenloaitin !!}</td>
+                      <td><?php echo e($i++); ?></td>
+                      <td id="ten<?php echo e($item->_id); ?>"><?php echo $item->tendacdiemnhadat; ?></td>
                      
-                      <td><button class="btn btn-primary a-btn-slide-text" data-toggle="modal" data-target="#sua" value="{{$item->_id}}" onclick="sua(this)">
+                      <td><button class="btn btn-primary a-btn-slide-text" data-toggle="modal" data-target="#sua" value="<?php echo e($item->_id); ?>" onclick="sua(this)">
                           <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                           <span><strong>Chỉnh sửa</strong></span>            
                       </button>
                       </td>
-                        <td><button id="xoaloaitin{{$item->id}}"  value="{{$item->id}}" onclick="xoa(this)" class="btn btn-danger a-btn-slide-text">
+                        <td><button id="xoadacdiemnhadat<?php echo e($item->id); ?>"  value="<?php echo e($item->id); ?>" onclick="xoa(this)" class="btn btn-danger a-btn-slide-text">
                           <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                           <span><strong>Xóa</strong></span>           
                       </a>
                       </td>
                     </tr>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                   </tbody>
                 </table>
               </div>
@@ -54,21 +53,21 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="lineModalLabel">Chỉnh sửa loại Tin</h3>
+        <h3 class="modal-title" id="lineModalLabel">Chỉnh sửa Đặc điểm nhà đất</h3>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
 
         <!-- content goes here -->
-        <form id="formsua" action="{{ URL::to('admin/danhmuc/sualoaitin')}}" method="POST" enctype="multipart/form-data">
+        <form id="formsua" action="<?php echo e(URL::to('admin/danhmuc/suadacdiemnhadat')); ?>" method="POST" enctype="multipart/form-data">
           <div id="ketquasua" >
           </div>
           <input class="form-control" id="iddanhmuc" name="iddanhmuc"  hidden="true" />
           <table class="table table-striped table-hovered">
             <tr>
 
-              <td>Tên loại tin</td>
-              <td><input class="form-control" id="tendanhmuc" name="tendanhmuc"  placeholder="Tên loại tin" autofocus/></td>
+              <td>Tên Đặc điểm nhà đất</td>
+              <td><input class="form-control" id="tendanhmuc" name="tendanhmuc"  placeholder="Tên đặc điểm nhà đất" autofocus/></td>
             </tr>
           </table>
           <div style="float: right;">
@@ -88,20 +87,20 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="lineModalLabel">Thêm Loại Tin</h3>
+        <h3 class="modal-title" id="lineModalLabel">Thêm Đặc Điểm Nhà Đất</h3>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
 
         <!-- content goes here -->
-        <form id="formthem" action="{{ URL::to('admin/danhmuc/themloaitin')}}" method="POST" enctype="multipart/form-data">
+        <form id="formthem" action="<?php echo e(URL::to('admin/danhmuc/themdacdiemnhadat')); ?>" method="POST" enctype="multipart/form-data">
           <div id="ketquathem" >
           </div>
           <table class="table table-striped table-hovered">
             <tr>
 
-              <td>Tên loại Tin</td>
-              <td><input class="form-control" id="txt_ten" name="ten"  placeholder="Tên loại tin" autofocus/></td>
+              <td>Tên đặc điểm nhà đất</td>
+              <td><input class="form-control" id="txt_ten" name="ten"  placeholder="Tên đặc điểm nhà đất" autofocus/></td>
             </tr>
           </table>
           <div style="float: right;">
@@ -116,9 +115,9 @@
   </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('script')
+<?php $__env->startSection('script'); ?>
 
 <script type="text/javascript">
   $('.btnclose').click(function(){
@@ -127,8 +126,8 @@
 
 function xoa(e){
     var tendanhmuc= document.getElementById('ten'+e.value).innerHTML;
-    if(confirm("Bạn chắc chắn muốn xóa loại tin: "+tendanhmuc + " không ?") == true){
-      var url = base_url+'/admin/danhmuc/xoaloaitin/'+e.value;
+    if(confirm("Bạn chắc chắn muốn xóa đặc điểm nhà đất: "+tendanhmuc + " không ?") == true){
+      var url = base_url+'/admin/danhmuc/xoadacdiemnhadat/'+e.value;
       $.ajax({
         type : 'get',
         url : url,
@@ -252,4 +251,5 @@ function sua(e){
 
   
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.layouts.index', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>

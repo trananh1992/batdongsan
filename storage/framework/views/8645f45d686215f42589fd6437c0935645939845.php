@@ -3,7 +3,7 @@
 <nav class="classy-navbar justify-content-between" id="southNav">
 
     <!-- Logo -->
-    <a class="nav-brand" href="index.html"><img src="img/core-img/logo.png" alt=""></a>
+    <a class="nav-brand" href="index.html"><img src="<?php echo e(URL::to('img/core-img/logo.png')); ?>" alt=""></a>
 
     <!-- Navbar Toggler -->
     <div class="classy-navbar-toggler">
@@ -21,7 +21,7 @@
         <!-- Nav Start -->
         <div class="classynav">
             <ul>
-                <li><a href="/">Home</a></li>
+                <li><a href="<?php echo e(asset('/')); ?>">Trang chủ</a></li>
                 <li><a href="#">Pages</a>
                     <ul class="dropdown">
                         <li><a href="/homepage">Home</a></li>
@@ -42,10 +42,7 @@
                         <li><a href="elements.html">Elements</a></li>
                     </ul>
                 </li>
-                <li><a href="about-us.html">About Us</a></li>
-                <li><a href="listings.html">Properties</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="#">Mega Menu</a>
+                <li style="display: none;"><a href="#">Mega Menu</a>
                     <div class="megamenu">
                         <ul class="single-mega cn-col-4">
                             <li class="title">Headline 1</li>
@@ -81,7 +78,14 @@
                         </ul>
                     </div>
                 </li>
-                <li><a href="contact.html">Contact</a></li>
+
+                <li><a href="#">Đăng ký/Đăng nhập</a>
+                    <ul class="dropdown">
+                        <li><a href="#">Đăng ký</a></li>
+                        <li><a href="#">Đăng nhập</a></li>
+                    </ul>
+                </li>
+                <li><a href="contact.html">Liên hệ</a></li>
             </ul>
 
             <!-- Search Form -->

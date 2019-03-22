@@ -7,4 +7,22 @@
 .main-header-area {
     height: 60px;
 }
-
+p{
+	color: black !important;
+}
+#stickyHeader{
+	height: 55px;
+}
+#stickyHeader, #stickyHeader .dropdown{
+	background-color: darkslategray;
+}
+.anhtin{
+	width: 100%;
+	height: 210px !important;
+}
+#sltinh, #slhuyen, #slxa{
+	display: block !important;
+}
+.nice-select{
+	display: none;
+}

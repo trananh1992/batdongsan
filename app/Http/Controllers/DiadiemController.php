@@ -229,6 +229,15 @@ class DiadiemController extends Controller
         return response()->json(['success'=>'Xóa xã thành công']);
 
     }
+    public function getdstinh()
+    {
+        $tinh=Tinh::all();
+        $tinh = array();
+        foreach ($tinh as $key => $value) {
+            array_push($tinh, array('id'=>$value->id,'ten'=>$value->ten));
+        }
+        return $tinh;
+    }
     public function getdshuyen($idtinh)
     {
         $tinh=Tinh::find($idtinh);
